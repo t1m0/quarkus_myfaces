@@ -56,7 +56,9 @@
                     <h:inputText id="country" value="#{detailView.user.address.country}" required="true" />
                 </div>
                 <button id="edit-button" type="button" onclick="edit()">Edit</button>
-                <h:commandButton id="save-button" value="Save" action="#{detailView.save}" styleClass="hidden"/>
+                <h:commandButton id="save-button" value="Save" action="#{detailView.save}" styleClass="hidden">
+                    <f:ajax execute="@form" />
+                </h:commandButton>
                 <h:commandButton id="lock-button" value="Lock User" action="#{detailView.lock}">
                     <f:ajax render="state" />
                 </h:commandButton>
