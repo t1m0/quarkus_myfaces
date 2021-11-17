@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+
+<h:body>
+    <ui:composition template="templates/commonLayout.xhtml">
+        <ui:define name="content">
+            <h:form id="user-form">
+                <div class="input-group">
+                    <h:outputLabel for="uuid">UUID:</h:outputLabel>
+                    <h:inputText id="uuid" value="#{detailView.user.uuid}" disabled="true"/>
+                </div>
+                <div class="input-group">
+                    <h:outputLabel for="state">State:</h:outputLabel>
+                    <h:inputText id="state" value="#{detailView.user.state}" disabled="true"/>
+                </div>
+                <div class="input-group">
+                    <h:outputLabel for="firstName">First Name:</h:outputLabel>
+                    <h:inputText id="firstName" value="#{detailView.user.firstName}" required="true" disabled="true"/>
+                </div>
+                <div class="input-group">
+                    <h:outputLabel for="lastName">Last Name:</h:outputLabel>
+                    <h:inputText id="lastName" value="#{detailView.user.lastName}" required="true" disabled="true"/>
+                </div>
+                <div class="input-group">
+                    <h:outputLabel for="email">E-Mail:</h:outputLabel>
+                    <h:inputText id="email" value="#{detailView.user.email}" required="true" disabled="true"/>
+                </div>
+                <div class="input-group">
+                    <h:outputLabel for="mobileNumber">MobileNumber:</h:outputLabel>
+                    <h:inputText id="mobileNumber" value="#{detailView.user.mobileNumber}" required="true" disabled="true"/>
+                </div>
+                <div class="input-group">
+                    <h:outputLabel for="street">Street:</h:outputLabel>
+                    <h:inputText id="street" value="#{detailView.user.address.street}" required="true" disabled="true"/>
+                </div>
+                <div class="input-group">
+                    <h:outputLabel for="houseNumber">House No.:</h:outputLabel>
+                    <h:inputText id="houseNumber" value="#{detailView.user.address.houseNumber}" required="true" disabled="true"/>
+                </div>
+                <div class="input-group">
+                    <h:outputLabel for="zipCode">Zipcode:</h:outputLabel>
+                    <h:inputText id="zipCode" value="#{detailView.user.address.zipCode}" required="true" disabled="true"/>
+                </div>
+                <div class="input-group">
+                    <h:outputLabel for="city">City:</h:outputLabel>
+                    <h:inputText id="city" value="#{detailView.user.address.city}" required="true" disabled="true"/>
+                </div>
+                <div class="input-group">
+                    <h:outputLabel for="country">Country:</h:outputLabel>
+                    <h:inputText id="country" value="#{detailView.user.address.country}" required="true" disabled="true"/>
+                </div>
+                <button id="edit-button" type="button" onclick="edit()">Edit</button>
+                <h:commandButton id="save-button" value="Save" action="#{detailView.save}" styleClass="hidden"/>
+                <h:commandButton id="lock-button" value="Lock User" action="#{detailView.lock}">
+                    <f:ajax render="state" />
+                </h:commandButton>
+                <h:commandButton id="unlock-button" value="Unlock User" action="#{detailView.unlock}">
+                    <f:ajax render="state" />
+                </h:commandButton>
+                <h:commandButton id="confirm-button" value="Confirm New User" action="#{detailView.confirm}">
+                    <f:ajax render="state" />
+                </h:commandButton>
+            </h:form>
+            <h:outputScript type="javascript">
+                document.addEventListener("DOMContentLoaded", function(){
+                    showCorrectActionButton();
+                });
+                function edit() {
+                    console.log("edit");
+                    showButton('user-form:save-button');
+                    hideButton('edit-button')
+                    disableButtons(true);
+                    disableFields(false);
+                }
+
+                function postSave() {
+                    console.log("postSave");
+                    hideButton('user-form:save-button');
+                    showButton('edit-button')
+                    disableButtons(false);
+                    disableFields(true);
+                    showCorrectActionButton();
+                }
+
+                function showCorrectActionButton() {
+                    const state = document.getElementById('user-form:state');
+                    switch (state.value) {
+                        case 'New':
+                            showButton('user-form:confirm-button')
+                            hideButton('user-form:lock-button');
+                            hideButton('user-form:unlock-button');
+                            break;
+                        case 'Active':
+                            showButton('user-form:lock-button')
+                            hideButton('user-form:unlock-button');
+                            hideButton('user-form:confirm-button');
+                            break;
+                        case 'Locked':
+                            showButton('user-form:unlock-button')
+                            hideButton('user-form:lock-button');
+                            hideButton('user-form:confirm-button');
+                            break;
+                    }
+                }
+
+                function hideButton(id) {
+                    let button = document.getElementById(id);
+                    if(button) {
+                        button.classList.add('hidden');
+                    }
+                }
+
+                function showButton(id) {
+                    let button = document.getElementById(id);
+                    if(button){
+                        button.classList.remove('hidden');
+                    }
+                }
+
+                function disableButtons(disabled) {
+                    toggleElement('user-form:lock-button', disabled);
+                    toggleElement('user-form:unlock-button', disabled);
+                    toggleElement('user-form:confirm-button', disabled);
+                }
+
+                function disableFields(disabled) {
+                    let fields = document.querySelectorAll('input[type=\'text\']');
+                    for(const field of fields) {
+                        field.disabled = disabled;
+                    }
+                }
+
+                function toggleElement(id, disabled) {
+                    let button = document.getElementById(id);
+                    if (button) {
+                        button.disabled = disabled;
+                    }
+                }
+            </h:outputScript>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

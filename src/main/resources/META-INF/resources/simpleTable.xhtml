@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+
+<h:body>
+    <ui:composition template="templates/commonLayout.xhtml">
+        <ui:define name="content">
+            <h:dataTable value="#{simpleView.users}" var="user"
+                         styleClass="simpleTable"
+                         headerClass="simpleTableHeader"
+                         rowClasses="simpleTableOddRow,simpleTableEvenRow">
+                <h:column>
+                    <f:facet name="header">State</f:facet>
+                    #{user.state}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">UUID</f:facet>
+                    #{user.uuid}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">FirstName</f:facet>
+                    #{user.firstName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">LastName</f:facet>
+                    #{user.lastName}
+                </h:column>
+                <h:column>
+                    <h:link value="Show Details" outcome="detailView.xhtml?uuid=#{user.uuid}"/>
+                </h:column>
+            </h:dataTable>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
