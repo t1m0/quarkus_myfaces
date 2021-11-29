@@ -1,0 +1,15 @@
+{
+  "address": {
+    "city": "New City",
+    "country": "Germany",
+    "houseNumber": "25a",
+    "street": "Neuer Weg",
+    "zipCode": "33322"
+  },
+  "email": "john.doe@test.com",
+  "firstName": "John",
+  "lastName": "Doe",
+  "mobileNumber": "+49 1579 6238801",
+  "state": "Active",
+  "uuid": "EXISTING-USER"
+}
