@@ -28,7 +28,7 @@ public class User {
     private Address address = new Address();
     @Column
     @Enumerated(EnumType.STRING)
-    private UserState state;
+    private UserState state = UserState.New;
 
     public String getUuid() {
         return uuid;

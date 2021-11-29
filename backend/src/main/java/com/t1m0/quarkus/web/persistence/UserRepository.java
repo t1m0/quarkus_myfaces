@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -35,10 +36,24 @@ public class UserRepository {
     @Transactional
     public User save(User user) {
         if (StringUtils.isEmpty(user.getUuid())) {
+            user.setUuid(UUID.randomUUID().toString());
             entityManager.persist(user);
             return user;
         } else {
             return entityManager.merge(user);
+        }
+    }
+
+    @Transactional
+    public void delete(User user) {
+        entityManager.remove(user);
+    }
+
+    @Transactional
+    public void delete(String uuid) {
+        User user = find(uuid);
+        if(user != null) {
+            entityManager.remove(user);
         }
     }
 

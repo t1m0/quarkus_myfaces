@@ -1,0 +1,13 @@
+{
+  "address": {
+    "city": "Alt Lewinburg",
+    "country": "Germany",
+    "houseNumber": "59b",
+    "street": "Birkengartenstr.",
+    "zipCode": "70174"
+  },
+  "email": "john.doe@new.com",
+  "firstName": "John",
+  "lastName": "Doe",
+  "mobileNumber": "+49 12333 458976"
+}
