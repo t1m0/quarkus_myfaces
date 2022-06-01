@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>com.t1m0.quarkus.web</groupId>
-            <artifactId>backend-client-runtime</artifactId>
+            <artifactId>backend-client</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.myfaces.core.extensions.quarkus</groupId>
